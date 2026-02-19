@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
 import {
   addTransaction,
-  getTransactions,
   updateTransaction,
   deleteTransaction
 } from '../services/transactionService';
+import { collection, query, where, onSnapshot, orderBy } from 'firebase/firestore';
+import { db } from '../config/firebase';
 
 export const useTransactions = (userId) => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch transactions on mount and when userId changes
+  // Real-time listener for transactions
   useEffect(() => {
     if (!userId) {
       setTransactions([]);
@@ -19,32 +20,40 @@ export const useTransactions = (userId) => {
       return;
     }
 
-    const fetchTransactions = async () => {
-      try {
-        setLoading(true);
-        const data = await getTransactions(userId);
-        setTransactions(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+    setLoading(true);
 
-    fetchTransactions();
+    // Create query
+    const q = query(
+      collection(db, 'transactions'),
+      where('userId', '==', userId)
+      // Note: If you want server-side sorting, you need a composite index in Firestore.
+      // For now, we'll sort client-side to avoid index creation errors.
+    );
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+
+      // Client-side sorting (newest first)
+      data.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      setTransactions(data);
+      setLoading(false);
+    }, (err) => {
+      console.error("Error fetching transactions:", err);
+      setError(err.message);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
   }, [userId]);
 
   const createTransaction = async (transactionData) => {
     try {
-      const docRef = await addTransaction(userId, transactionData);
-      const newTransaction = {
-        id: docRef.id,
-        ...transactionData,
-        userId,
-        createdAt: new Date().toISOString()
-      };
-      setTransactions(prev => [newTransaction, ...prev]);
-      return newTransaction;
+      await addTransaction(userId, transactionData);
+      // No need to manually update state, the listener will handle it!
     } catch (err) {
       setError(err.message);
       throw err;
@@ -54,9 +63,6 @@ export const useTransactions = (userId) => {
   const editTransaction = async (transactionId, updatedData) => {
     try {
       await updateTransaction(transactionId, updatedData);
-      setTransactions(prev =>
-        prev.map(t => (t.id === transactionId ? { ...t, ...updatedData } : t))
-      );
     } catch (err) {
       setError(err.message);
       throw err;
@@ -66,7 +72,6 @@ export const useTransactions = (userId) => {
   const removeTransaction = async (transactionId) => {
     try {
       await deleteTransaction(transactionId);
-      setTransactions(prev => prev.filter(t => t.id !== transactionId));
     } catch (err) {
       setError(err.message);
       throw err;

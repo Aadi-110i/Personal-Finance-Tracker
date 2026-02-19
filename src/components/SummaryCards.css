@@ -3,7 +3,7 @@
   grid-template-columns: repeat(3, 1fr);
   /* Force 3 columns for symmetry */
   gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-2xl);
+  margin-bottom: 0;
 }
 
 @media (max-width: 900px) {

@@ -1,0 +1,43 @@
+.three-d-card-wrap {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.three-d-card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out;
+    /* Fast response for mouse move */
+    will-change: transform;
+}
+
+/* Glare Effect */
+.three-d-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(255, 255, 255, 0.2) 0%,
+            transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    border-radius: inherit;
+}
+
+.three-d-card-wrap:hover .three-d-card::after {
+    opacity: 1;
+}
+
+/* Content layer to ensure text stays sharp and "floats" if needed */
+.three-d-content {
+    transform: translateZ(20px);
+}

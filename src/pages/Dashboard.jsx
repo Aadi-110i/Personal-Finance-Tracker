@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { Plus } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Plus, Search } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 import SummaryCards from '../components/SummaryCards';
 import TransactionList from '../components/TransactionList';
 import Charts from '../components/Charts';
 import TransactionForm from '../components/TransactionForm';
+import AIInsights from '../components/AIInsights';
+import ScrollReveal from '../components/ScrollReveal';
 import { useTransactions } from '../hooks/useTransactions';
 import './Dashboard.css';
 
@@ -12,6 +16,8 @@ const Dashboard = ({ user }) => {
   const [showForm, setShowForm] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const location = useLocation();
+  const isDashboardView = location.pathname === '/';
 
   const handleAddTransaction = async (formData) => {
     try {
@@ -70,15 +76,30 @@ const Dashboard = ({ user }) => {
 
   const displayTransactions = user ? filteredTransactions : guestTransactions;
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
+
   return (
     <div className="dashboard">
       <div className="dashboard-header">
         <div>
           <h1 className="neon-text">
-            {user ? `Welcome, ${user.displayName || 'User'}! 👋` : 'Welcome to FinanceTracker! 🚀'}
+            {user ? `Hey, ${user.displayName || 'User'}!` : 'Welcome to FinanceTracker!'}
           </h1>
           <p className="header-subtitle" style={{ color: 'var(--text-secondary)' }}>
-            {user ? "Here's your financial overview" : "Explore our premium dashboard features (Guest View)"}
+            {user ? "Let's check your financial pulse." : "Explore our premium dashboard features (Guest View)"}
           </p>
         </div>
         {user ? (
@@ -97,7 +118,7 @@ const Dashboard = ({ user }) => {
             color: 'var(--accent-primary)',
             fontSize: '0.875rem'
           }}>
-            👀 Guest Mode
+            Guest Mode
           </div>
         )}
       </div>
@@ -112,9 +133,8 @@ const Dashboard = ({ user }) => {
       {!user && (
         <motion.div
           initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
           style={{
             position: 'relative',
             borderRadius: 'var(--radius-xl)',
@@ -122,19 +142,21 @@ const Dashboard = ({ user }) => {
             marginBottom: '4rem',
             textAlign: 'center',
             overflow: 'hidden',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            background: 'radial-gradient(circle at center, rgba(124, 58, 237, 0.1) 0%, rgba(10, 10, 15, 0.4) 100%)',
-            backdropFilter: 'blur(20px)'
+            border: '1px solid rgba(255, 255, 255, 0.05)',
+            background: 'rgba(255, 255, 255, 0.01)',
+            backdropFilter: 'blur(30px)',
+            WebkitBackdropFilter: 'blur(30px)',
+            boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)'
           }}
         >
           <div style={{ position: 'relative', zIndex: 10 }}>
             <h2 className="neon-text" style={{ fontSize: '3.5rem', marginBottom: '1.5rem', lineHeight: 1.1 }}>
-              Master Your Money <br />
-              <span style={{ color: 'var(--accent-cyan)' }}>Style Your Future</span>
+              Your Money, Your Rules. <br />
+              <span style={{ color: 'var(--accent-cyan)' }}>Style Your Future.</span>
             </h2>
             <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto 2rem' }}>
-              Experience the next generation of personal finance.
-              AI-powered insights, premium aesthetics, and total control.
+              Ditch the spreadsheets. Experience finance that flows as smooth as you do.
+              AI insights, premium aesthetics, and total control.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
               <a href="/register" className="btn btn-primary" style={{ padding: '1rem 2.5rem', fontSize: '1.1rem', borderRadius: '100px' }}>Get Started</a>
@@ -145,23 +167,25 @@ const Dashboard = ({ user }) => {
       )
       }
 
-      <div className="search-section">
-        <input
-          type="text"
-          placeholder="🔍 Search transactions by description or category..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-input"
-          disabled={!user}
-        />
-      </div>
+      <ScrollReveal width="100%">
+        <div className="search-section">
+          <input
+            type="text"
+            placeholder="Search transactions by description or category..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+            disabled={!user}
+          />
+          <Search className="search-icon" size={20} />
+        </div>
+      </ScrollReveal>
 
       <motion.div
         className="dashboard-grid"
         variants={containerVariants}
         initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
+        animate="show"
       >
         <motion.div className="grid-item-summary" variants={itemVariants}>
           <SummaryCards transactions={displayTransactions} />
@@ -172,15 +196,17 @@ const Dashboard = ({ user }) => {
             <motion.div className="grid-item-charts" variants={itemVariants}>
               <Charts transactions={displayTransactions} />
             </motion.div>
-            <motion.div className="grid-item-recent" variants={itemVariants}>
-              <h3 style={{ marginBottom: '1.5rem', fontSize: '1.5rem' }}>Recent History</h3>
-              <TransactionList
-                transactions={displayTransactions}
-                onEdit={user ? handleEditClick : () => { }}
-                onDelete={user ? handleDeleteTransaction : () => { }}
-                loading={user ? loading : false}
-              />
-            </motion.div>
+            {isDashboardView && (
+              <motion.div className="grid-item-recent" variants={itemVariants}>
+                <h3 style={{ marginBottom: '1.5rem', fontSize: '1.5rem' }}>Recent History</h3>
+                <TransactionList
+                  transactions={displayTransactions}
+                  onEdit={user ? handleEditClick : () => { }}
+                  onDelete={user ? handleDeleteTransaction : () => { }}
+                  loading={user ? loading : false}
+                />
+              </motion.div>
+            )}
           </>
         )}
 
@@ -208,9 +234,11 @@ const Dashboard = ({ user }) => {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="neon-text" style={{ textAlign: 'center', marginBottom: '3rem', fontSize: '2.5rem' }}>
-              Why FinanceTracker?
-            </h2>
+            <ScrollReveal direction="up" delay={0.2}>
+              <h2 className="neon-text" style={{ textAlign: 'center', marginBottom: '3rem', fontSize: '2.5rem' }}>
+                Why FinanceTracker?
+              </h2>
+            </ScrollReveal>
             <div className="features-grid" style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
@@ -218,25 +246,21 @@ const Dashboard = ({ user }) => {
               padding: '0 1rem'
             }}>
               {[
-                { icon: '📊', title: 'Advanced Analytics', desc: 'Visualize your spending habits with interactive charts and real-time data analysis. Gain insights that help you save more.' },
-                { icon: '🔐', title: 'Bank-Grade Security', desc: 'Your financial data is encrypted and stored securely. We prioritize your privacy with state-of-the-art protection.' },
-                { icon: '⚡', title: 'Real-time Sync', desc: 'Add transactions instantly and see your balance update in real-time across all your devices.' }
+                { title: 'Advanced Analytics', desc: 'Visualize your spending habits with interactive charts and real-time data analysis. Gain insights that help you save more.' },
+                { title: 'Bank-Grade Security', desc: 'Your financial data is encrypted and stored securely. We prioritize your privacy with state-of-the-art protection.' },
+                { title: 'Real-time Sync', desc: 'Add transactions instantly and see your balance update in real-time across all your devices.' }
               ].map((feature, index) => (
-                <motion.div
-                  key={index}
-                  className="glass-panel-premium"
-                  style={{ padding: '2.5rem' }}
-                  initial={{ y: 50, opacity: 0 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                >
-                  <div style={{ fontSize: '3rem', marginBottom: '1.5rem', background: 'var(--primary-glow)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>{feature.icon}</div>
-                  <h3 style={{ marginBottom: '1rem', color: '#fff', fontSize: '1.5rem' }}>{feature.title}</h3>
-                  <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', fontSize: '1.1rem' }}>
-                    {feature.desc}
-                  </p>
-                </motion.div>
+                <ScrollReveal key={index} delay={index * 0.2} direction="up">
+                  <div
+                    className="glass-panel-premium hover-glow"
+                    style={{ padding: '2.5rem', height: '100%' }}
+                  >
+                    <h3 style={{ marginBottom: '1rem', color: '#fff', fontSize: '1.5rem' }}>{feature.title}</h3>
+                    <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', fontSize: '1.1rem' }}>
+                      {feature.desc}
+                    </p>
+                  </div>
+                </ScrollReveal>
               ))}
             </div>
           </motion.div>

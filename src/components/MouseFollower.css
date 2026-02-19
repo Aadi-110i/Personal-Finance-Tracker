@@ -1,0 +1,55 @@
+/* Custom Cursor Styles */
+/* System cursor visibility restored by removing cursor: none */
+
+.custom-cursor-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--accent-primary);
+    border-radius: 50%;
+    mix-blend-mode: difference;
+    transition: width 0.3s, height 0.3s;
+}
+
+.custom-cursor-ring {
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--accent-primary);
+    border-radius: 50%;
+    transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+    background-color: transparent;
+}
+
+/* Hover States */
+.custom-cursor-dot.hovering {
+    width: 0px;
+    /* Hide inner dot on hover */
+    height: 0px;
+}
+
+.custom-cursor-ring.hovering {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(139, 92, 246, 0.1);
+    border-color: var(--accent-secondary);
+    mix-blend-mode: screen;
+}
+
+/* Hide on mobile/touch devices */
+@media (hover: none) and (pointer: coarse) {
+
+    .custom-cursor-dot,
+    .custom-cursor-ring {
+        display: none;
+    }
+
+    body {
+        cursor: auto;
+    }
+
+    a,
+    button,
+    input,
+    .interactive {
+        cursor: pointer;
+    }
+}

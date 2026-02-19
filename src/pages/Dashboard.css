@@ -1,9 +1,7 @@
 .dashboard {
-  max-width: 1600px;
-  margin-left: 320px;
-  /* Offset for sidebar (280px + spacing) */
+  max-width: 100%;
   padding: var(--spacing-2xl);
-  width: calc(100% - 320px);
+  width: 100%;
 }
 
 .dashboard-header {
@@ -34,7 +32,7 @@
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: var(--spacing-lg);
+  gap: 0.75rem;
   grid-auto-rows: minmax(180px, auto);
 }
 
@@ -43,11 +41,11 @@
 }
 
 .grid-item-charts {
-  grid-column: span 8;
+  grid-column: span 12;
 }
 
 .grid-item-recent {
-  grid-column: span 4;
+  grid-column: span 12;
 }
 
 /* Search Section */
@@ -55,12 +53,16 @@
   margin-bottom: var(--spacing-xl);
   position: relative;
   z-index: 10;
+  width: 100%;
 }
 
 .search-input {
   width: 100%;
   padding: 1.25rem 1.5rem;
-  padding-left: 3.5rem;
+  padding-left: 1.5rem;
+  /* Standard left padding */
+  padding-right: 3.5rem;
+  /* Space for right-aligned icon */
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -69,6 +71,22 @@
   font-size: 1.1rem;
   transition: all 0.3s ease;
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+}
+
+.search-icon {
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+  /* Let clicks pass through to input if needed */
+  transition: color 0.3s ease;
+}
+
+.search-input:focus~.search-icon {
+  color: var(--primary-glow);
+  /* Highlight icon when input is focused */
 }
 
 .search-input::placeholder {

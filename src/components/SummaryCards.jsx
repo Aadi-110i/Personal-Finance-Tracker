@@ -83,7 +83,7 @@ const SummaryCards = ({ transactions }) => {
             <Icon className="card-icon" size={28} />
           </div>
           <div className="card-main">
-            <p className="card-amount">${amount}</p>
+            <p className="card-amount">₹{amount}</p>
             <div className="card-chart">
               <ResponsiveContainer width="100%" height={50}>
                 <AreaChart data={data}>

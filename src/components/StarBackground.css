@@ -1,3 +1,61 @@
+/* Purple Glows */
+.purple-glows {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    /* Behind stars */
+    pointer-events: none;
+}
+
+.glow-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.6;
+    animation: pulse-glow 8s ease-in-out infinite alternate;
+}
+
+.blob-1 {
+    top: -10%;
+    left: 20%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 70%);
+}
+
+.blob-2 {
+    bottom: 10%;
+    right: 10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.3) 0%, transparent 70%);
+    animation-delay: 2s;
+}
+
+.blob-3 {
+    top: 40%;
+    left: 40%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(167, 139, 250, 0.2) 0%, transparent 70%);
+    animation-delay: 4s;
+}
+
+@keyframes pulse-glow {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+}
+
 .star-background-container {
     position: fixed;
     top: 0;
@@ -6,7 +64,8 @@
     height: 100%;
     z-index: -1;
     overflow: hidden;
-    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+    background: radial-gradient(ellipse at bottom, #0B0B15 0%, #050508 100%);
+    /* Darker background */
     pointer-events: none;
 }
 
@@ -20,52 +79,35 @@
 
 .layer-1 {
     background-image:
-        radial-gradient(1px 1px at 10% 10%, white, transparent),
-        radial-gradient(1px 1px at 20% 40%, white, transparent),
-        radial-gradient(1.5px 1.5px at 50% 50%, white, transparent),
-        radial-gradient(2px 2px at 80% 80%, white, transparent);
-    background-size: 400px 400px;
-    opacity: 0.3;
-    animation: stars-move 100s linear infinite;
+        radial-gradient(1.5px 1.5px at 10% 10%, white, transparent),
+        radial-gradient(1.5px 1.5px at 20% 40%, white, transparent),
+        radial-gradient(2px 2px at 50% 50%, white, transparent),
+        radial-gradient(2.5px 2.5px at 80% 80%, white, transparent),
+        radial-gradient(1.5px 1.5px at 15% 60%, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(2px 2px at 70% 20%, rgba(255, 255, 255, 0.8), transparent);
+    background-size: 300px 300px;
+    opacity: 0.8;
+    animation: stars-fall 20s linear infinite;
 }
 
 .layer-2 {
     background-image:
-        radial-gradient(1.5px 1.5px at 15% 15%, rgba(167, 139, 250, 0.8), transparent),
-        radial-gradient(1px 1px at 35% 65%, white, transparent),
-        radial-gradient(2px 2px at 60% 20%, rgba(52, 211, 153, 0.6), transparent),
-        radial-gradient(1px 1px at 90% 90%, white, transparent);
-    background-size: 550px 550px;
-    opacity: 0.5;
-    animation: stars-move 150s linear infinite reverse;
+        radial-gradient(2px 2px at 15% 15%, rgba(167, 139, 250, 1), transparent),
+        radial-gradient(1.5px 1.5px at 35% 65%, white, transparent),
+        radial-gradient(2.5px 2.5px at 60% 20%, rgba(52, 211, 153, 1), transparent),
+        radial-gradient(1.5px 1.5px at 90% 90%, white, transparent),
+        radial-gradient(2px 2px at 45% 45%, rgba(139, 92, 246, 1), transparent);
+    background-size: 400px 400px;
+    opacity: 0.6;
+    animation: stars-fall 30s linear infinite;
 }
 
-.floating-particles {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.layer-3 {
-    background-image: radial-gradient(2px 2px at 50% 50%, rgba(139, 92, 246, 0.4), transparent);
-    background-size: 200px 200px;
-    opacity: 0.4;
-}
-
-.layer-4 {
-    background-image: radial-gradient(3px 3px at 25% 75%, rgba(236, 72, 153, 0.3), transparent);
-    background-size: 300px 300px;
-    opacity: 0.3;
-}
-
-@keyframes stars-move {
+@keyframes stars-fall {
     from {
-        transform: translateY(0);
+        transform: translateY(-1000px);
     }
 
     to {
-        transform: translateY(-1000px);
+        transform: translateY(0);
     }
 }

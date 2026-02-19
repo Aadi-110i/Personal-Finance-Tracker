@@ -1,8 +1,7 @@
 .market-page {
     padding: var(--spacing-2xl);
-    max-width: 1600px;
-    margin-left: 320px;
-    width: calc(100% - 320px);
+    max-width: 100%;
+    width: 100%;
 }
 
 .market-grid {

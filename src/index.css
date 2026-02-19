@@ -1,25 +1,102 @@
-/* Index.css - Minimal styles, main styles in styles/global.css */
-* {
+/* Global Futuristic Theme */
+:root {
+  --font-body: 'Times New Roman', serif;
+  --font-heading: 'Times New Roman', serif;
+  --bg-space-dark: #050510;
+  --primary-glow: rgba(139, 92, 246, 0.5);
+  --secondary-glow: rgba(236, 72, 153, 0.5);
+  --accent-cyan: #06b6d4;
+  --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: var(--font-body);
+  background-color: var(--bg-space-dark);
+  color: #fff;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
+
+
+a,
+button,
+input {
+  /* cursor: none; Removed to keep system arrow visible */
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.6);
+}
+
+/* Selection */
+::selection {
+  background: rgba(139, 92, 246, 0.3);
+  color: #fff;
+}
+
+/* Hover Glow Utility */
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px var(--primary-glow);
+  border-color: rgba(139, 92, 246, 0.5);
+}
+
+/* Text Glow Utility */
+.text-glow {
+  text-shadow: 0 0 10px var(--primary-glow);
+}
+
+/* Padding Utility */
+.p-6 {
+  padding: 1.5rem;
+}
+
+/* Smooth Scroll Behavior */
+html {
+  scroll-behavior: smooth;
+}
+
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
 }
 
 @media (prefers-color-scheme: light) {
+
+  /* Enforcing dark mode for this theme */
   :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+    color: #fff;
+    background-color: var(--bg-space-dark);
   }
 }

@@ -1,387 +1,300 @@
-.transaction-list {
+/* TransactionList.css - Futuristic Card Layout */
+.transaction-list-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 6rem 4rem 4rem 4rem;
+  /* Extra top padding for dropdown spacing */
   background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(40px) saturate(180%);
-  -webkit-backdrop-filter: blur(40px) saturate(180%);
   border-radius: var(--radius-xl);
-  padding: var(--spacing-xl);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
-  position: relative;
-  overflow: hidden;
-}
-
-.transaction-list::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  margin-top: 1rem;
 }
 
 .list-controls {
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  /* Added horizontal padding to controls */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
-  gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-lg);
-  flex-wrap: wrap;
+  /* Ensure it behaves as a container */
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.controls-wrapper {
+  display: flex;
   align-items: center;
+  justify-content: flex-start;
+  /* Align left to keep filters together */
+  gap: 2.5rem;
+  /* Reduced from 4rem for better fit */
+  width: 100%;
+  flex-wrap: wrap;
+  /* Allow wrapping on small screens */
 }
 
 .filter-group {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
+  align-items: center;
+  gap: 2rem;
+  /* Spacing between "Type" text and the Dropdown */
 }
 
 .filter-group label {
-  font-size: 0.875rem;
-  font-weight: 600;
-  margin-bottom: 0;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .filter-select {
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-size: 0.875rem;
+  height: 56px;
+  /* Match icon-box height */
+  padding: 0 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: white;
+  font-size: 1.1rem;
+  min-width: 220px;
+  /* Wider */
   cursor: pointer;
-  min-width: 150px;
-  transition: all var(--transition-fast);
-}
-
-.filter-select:hover {
-  border-color: var(--accent-primary);
+  outline: none;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
 }
 
 .filter-select:focus {
-  outline: none;
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  border-color: var(--primary-glow);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.filter-select option {
+  background: #0f172a;
+  color: white;
+  padding: 10px;
 }
 
 .results-count {
   margin-left: auto;
+  /* Push to far right */
+  font-size: 1rem;
   color: var(--text-secondary);
-  font-weight: 500;
-  font-size: 0.875rem;
-}
-
-.table-container {
-  overflow-x: auto;
-  border-radius: var(--radius-md);
-}
-
-.transaction-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.transaction-table thead {
   background: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
 }
 
-.transaction-table th {
-  padding: var(--spacing-md);
-  text-align: left;
-  font-weight: 600;
-  color: var(--text-secondary);
-  border-bottom: 1px solid var(--border-glass);
-  white-space: nowrap;
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.loading-container {
+  text-align: center;
+  padding: 4rem;
+  color: #94a3b8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.transaction-table td {
-  padding: var(--spacing-md);
-  border-bottom: 1px solid var(--border-glass);
-  font-size: 0.95rem;
-  color: var(--text-primary);
+.spinner {
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top: 3px solid #a855f7;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
 }
 
-.transaction-table tbody tr {
-  transition: background-color var(--transition-fast);
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-.transaction-table tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.05);
+.transaction-card {
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 1rem;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
 }
 
-.transaction-row {
+.card-main-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  align-items: center;
+  padding: 1.5rem;
+  width: 100%;
+  gap: 1.5rem;
   cursor: pointer;
 }
 
-.transaction-row.income {
-  border-left: 4px solid var(--accent-success);
+.transaction-left-group {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  overflow: hidden;
 }
 
-.transaction-row.expense {
-  border-left: 4px solid var(--accent-danger);
+.transaction-center-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.category-badge {
-  display: inline-block;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--radius-sm);
-  color: white;
-  font-weight: 600;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.transaction-right-group {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
 }
 
-.description-cell {
-  max-width: 200px;
+.transaction-card:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+}
+
+.transaction-card.expanded {
+  background: rgba(20, 20, 30, 0.6);
+  border-color: var(--primary-glow);
+  box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.5);
+  margin: 1.5rem 0;
+}
+
+.icon-box {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.transaction-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  overflow: hidden;
+}
+
+.transaction-info h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #fff;
+  line-height: 1.2;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.category-pill {
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: inline-block;
   white-space: nowrap;
 }
 
-.amount-cell {
-  font-weight: 700;
-  font-size: 1.05rem;
+.date-text {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
 }
 
-.amount-cell.income {
-  color: var(--accent-success);
-}
-
-.amount-cell.expense {
-  color: var(--accent-danger);
-}
-
-.transaction-badge {
-  display: inline-block;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
+.amount {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.25rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: -0.5px;
 }
 
-.transaction-badge.income {
-  background: rgba(16, 185, 129, 0.1);
-  color: var(--accent-success);
+.expanded-details {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 0;
 }
 
-.transaction-badge.expense {
-  background: rgba(239, 68, 68, 0.1);
-  color: var(--accent-danger);
-}
-
-.actions-cell {
-  display: flex;
-  gap: var(--spacing-sm);
-  align-items: center;
-}
-
-.action-btn {
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: none;
-  border-radius: var(--radius-md);
-  background: var(--bg-secondary);
-  color: var(--text-primary);
+.btn-glass {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+  color: #e2e8f0;
+  transition: all 0.2s ease;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
   cursor: pointer;
-  transition: all var(--transition-fast);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 0.95rem;
 }
 
-.action-btn:hover {
-  background: var(--accent-primary);
-  color: white;
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
-.action-btn.edit-btn:hover {
-  background: var(--accent-primary);
-  color: white;
-}
-
-.action-btn.delete-btn:hover {
-  background: var(--accent-danger);
-  color: white;
-}
-
-.toggle-details {
-  background: none;
-  border: none;
-  color: var(--text-secondary);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-sm);
-  transition: color var(--transition-fast);
-}
-
-.toggle-details:hover {
-  color: var(--accent-primary);
-}
-
-.details-row {
-  background: var(--bg-tertiary);
-}
-
-.transaction-details {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--spacing-lg);
-  padding: var(--spacing-lg) 0;
-}
-
-.detail-item {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-}
-
-.detail-label {
-  font-weight: 600;
-  color: var(--text-secondary);
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.detail-value {
-  color: var(--text-primary);
-  word-break: break-all;
-}
-
-/* Empty State */
-.empty-state {
-  text-align: center;
-  padding: var(--spacing-2xl);
-  color: var(--text-secondary);
-}
-
-.empty-icon {
-  font-size: 3rem;
-  margin-bottom: var(--spacing-lg);
-}
-
-.empty-state h3 {
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-md);
-}
-
-/* Loading State */
-.loading-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-2xl);
-  gap: var(--spacing-lg);
-}
-
-.loading-container p {
-  color: var(--text-secondary);
-}
-
-/* Responsive Design */
 @media (max-width: 768px) {
-  .list-controls {
+  .controls-wrapper {
     flex-direction: column;
     align-items: stretch;
+    gap: 1.5rem;
   }
 
   .filter-group {
-    flex: 1;
-  }
-
-  .results-count {
-    margin-left: 0;
+    width: 100%;
   }
 
   .filter-select {
     width: 100%;
+    min-width: 0;
   }
 
-  .table-container {
-    font-size: 0.85rem;
-  }
-
-  .transaction-table th,
-  .transaction-table td {
-    padding: var(--spacing-sm);
-  }
-
-  .actions-cell {
-    flex-direction: column;
-    gap: var(--spacing-xs);
-  }
-
-  .action-btn {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: 0.75rem;
+  .results-count {
+    margin-left: 0;
+    text-align: center;
     width: 100%;
-  }
-
-  .description-cell {
-    max-width: 100px;
   }
 }
 
-@media (max-width: 480px) {
-  .transaction-table thead {
-    display: none;
+@media (max-width: 640px) {
+  .card-main-content {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.25rem;
   }
 
-  .transaction-table,
-  .transaction-table tbody,
-  .transaction-table tr,
-  .transaction-table td {
-    display: block;
-    width: 100%;
+  .transaction-center-group {
+    justify-content: flex-start;
+    padding-left: 5rem;
   }
 
-  .transaction-table tr {
-    margin-bottom: var(--spacing-lg);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-  }
-
-  .transaction-table td {
-    display: flex;
+  .transaction-right-group {
     justify-content: space-between;
-    align-items: center;
-    padding: var(--spacing-md);
-    border-bottom: 1px solid var(--border-color);
-    text-align: right;
-  }
-
-  .transaction-table td::before {
-    content: attr(data-label);
-    font-weight: 600;
-    margin-right: var(--spacing-md);
-    text-align: left;
-    flex: 1;
-    color: var(--text-secondary);
-  }
-
-  .transaction-row {
-    border-left: none;
-    border-top: 4px solid var(--accent-primary);
-  }
-
-  .transaction-table td:first-child {
-    border-top: none;
-  }
-
-  .actions-cell {
-    flex-direction: row;
-    justify-content: flex-end;
-    gap: var(--spacing-sm);
-  }
-
-  .action-btn {
-    width: auto;
+    width: 100%;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
   }
 }

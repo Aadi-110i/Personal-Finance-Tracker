@@ -14,7 +14,7 @@
   padding: var(--spacing-2xl);
   border-radius: var(--radius-xl);
   width: 100%;
-  max-width: 450px;
+  max-width: 550px;
   box-shadow: var(--shadow-glass);
   border: 1px solid var(--border-glass);
   animation: slideUp 0.5s ease-out;
@@ -69,18 +69,20 @@
 
 .input-icon {
   position: absolute;
-  left: var(--spacing-md);
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--text-secondary);
   pointer-events: none;
+  z-index: 10;
 }
 
 .auth-form input {
   width: 100%;
-  padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) calc(var(--spacing-md) + 28px + var(--spacing-md));
-  padding-left: 3rem;
-  border: 1px solid var(--border-color);
+  padding: 1rem 1rem 1rem calc(1rem + 20px + 0.75rem);
+  border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
-  background-color: var(--bg-primary);
+  background-color: rgba(0, 0, 0, 0.2);
   color: var(--text-primary);
   font-family: inherit;
   font-size: 1rem;
@@ -90,7 +92,8 @@
 .input-wrapper input:focus {
   outline: none;
   border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  background-color: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
 }
 
 .input-wrapper input:disabled {
@@ -184,7 +187,7 @@
   }
 
   .input-wrapper input {
-    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-sm) calc(var(--spacing-md) + 24px + var(--spacing-md));
+    padding-left: calc(1rem + 20px + 0.75rem);
   }
 
   .input-icon {

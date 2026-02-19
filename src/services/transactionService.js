@@ -14,6 +14,9 @@ import { db } from '../config/firebase';
 const TRANSACTIONS_COLLECTION = 'transactions';
 
 export const addTransaction = (userId, transactionData) => {
+  if (!userId) {
+    throw new Error("User ID is required to add transaction");
+  }
   return addDoc(collection(db, TRANSACTIONS_COLLECTION), {
     ...transactionData,
     userId,
