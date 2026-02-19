@@ -48,13 +48,13 @@ const RegisterPage = () => {
     try {
       await registerUser(email, password, displayName);
       setSuccess('Account created successfully! Redirecting to login...');
-      
+
       setTimeout(() => {
         navigate('/login');
       }, 2000);
     } catch (err) {
       let errorMessage = 'Failed to register';
-      
+
       if (err.code === 'auth/email-already-in-use') {
         errorMessage = 'Email already in use. Please use a different email or sign in.';
       } else if (err.code === 'auth/weak-password') {
@@ -64,7 +64,7 @@ const RegisterPage = () => {
       } else if (err.message) {
         errorMessage = err.message;
       }
-      
+
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -125,6 +125,7 @@ const RegisterPage = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 disabled={loading}
+                style={{ paddingLeft: '3.5rem' }}
               />
             </div>
           </div>
@@ -140,6 +141,7 @@ const RegisterPage = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="At least 6 characters"
                 disabled={loading}
+                style={{ paddingLeft: '3.5rem' }}
               />
             </div>
           </div>
@@ -155,12 +157,13 @@ const RegisterPage = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Confirm your password"
                 disabled={loading}
+                style={{ paddingLeft: '3.5rem' }}
               />
             </div>
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="btn btn-primary auth-btn"
             disabled={loading}
           >

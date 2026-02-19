@@ -79,7 +79,7 @@
 
 .auth-form input {
   width: 100%;
-  padding: 1rem 1rem 1rem calc(1rem + 20px + 0.75rem);
+  padding: 1rem 1rem 1rem 4rem !important;
   border: 1px solid var(--border-glass);
   border-radius: var(--radius-md);
   background-color: rgba(0, 0, 0, 0.2);
@@ -187,7 +187,7 @@
   }
 
   .input-wrapper input {
-    padding-left: calc(1rem + 20px + 0.75rem);
+    padding-left: 4rem !important;
   }
 
   .input-icon {

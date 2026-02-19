@@ -25,7 +25,7 @@ const LoginPage = () => {
       navigate('/');
     } catch (err) {
       let errorMessage = 'Failed to login';
-      
+
       if (err.code === 'auth/user-not-found') {
         errorMessage = 'User not found. Please register first.';
       } else if (err.code === 'auth/wrong-password') {
@@ -35,7 +35,7 @@ const LoginPage = () => {
       } else if (err.message) {
         errorMessage = err.message;
       }
-      
+
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -91,8 +91,8 @@ const LoginPage = () => {
             </div>
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="btn btn-primary auth-btn"
             disabled={loading}
           >
