@@ -1,0 +1,114 @@
+.charts-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  margin-top: var(--spacing-2xl);
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.chart-card {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-xl);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-xl);
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.chart-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-glow), var(--shadow-glass);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.chart-card h3 {
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-lg);
+  font-size: 1.1rem;
+}
+
+.chart-card.full-width {
+  grid-column: 1 / -1;
+}
+
+/* Recharts Customization */
+.recharts-text {
+  font-size: 0.85rem !important;
+}
+
+.recharts-legend-wrapper {
+  padding-top: var(--spacing-lg) !important;
+}
+
+.recharts-legend-item-text {
+  color: var(--text-secondary) !important;
+  font-size: 0.9rem !important;
+}
+
+.recharts-tooltip-cursor {
+  stroke: var(--accent-primary);
+  opacity: 0.2;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-card {
+    padding: var(--spacing-lg);
+  }
+
+  .chart-card h3 {
+    font-size: 1rem;
+    margin-bottom: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .charts-container {
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+  }
+
+  .chart-card {
+    padding: var(--spacing-md);
+  }
+
+  .chart-card h3 {
+    font-size: 0.95rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .recharts-text {
+    font-size: 0.7rem !important;
+  }
+
+  .recharts-legend-item-text {
+    font-size: 0.8rem !important;
+  }
+}
